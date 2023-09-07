@@ -12,7 +12,7 @@ def register():
     {
         "Username": "John117",
         "EmailAddress": "johnny@gmail.com",
-        "Password": "TSY@FYPi2023",
+        "Password": "12345678",
         "Phone_Number": "99999999"
     }
     """
