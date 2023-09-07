@@ -1,0 +1,11 @@
+app/__pycache__/**
+tests/__pycache__/**
+**/__pycache__/**
+.pytest_cache/**
+.env
+geckodriver.log
+tests/selenium/chrome_driver/**
+.DS_Store
+.DS_Store
+summary.json
+**/__pycache__
