@@ -1,9 +1,10 @@
 from app import app, db
-from flask import jsonify, request, url_for, render_template
+from flask import jsonify, request, url_for, render_template, Blueprint, g
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 from passageidentity import Passage
 import os
+from passageidentity import Passage, PassageError
 
 class User(db.Model):
     __tablename__ = 'user'
@@ -27,6 +28,25 @@ class User(db.Model):
             "Phone_Number": self.Phone_Number
             
         }
+
+auth = Blueprint('auth', __name__)
+
+PASSAGE_API_KEY = os.environ.get('PASSAGE_API_KEY')
+PASSAGE_APP_ID = os.environ.get('PASSAGE_APP_ID')
+
+try:
+    psg = Passage(PASSAGE_APP_ID, PASSAGE_API_KEY)
+except PassageError as e:
+    print(e)
+    exit()
+
+
+@auth.before_request
+def before_request():
+    try:
+        g.user = psg.authenticateRequest(request)
+    except PassageError as e:
+        return jsonify({'error': e})
 
 # Function and Route for user login
 @app.route("/login", methods=['POST'])

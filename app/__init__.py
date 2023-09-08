@@ -33,5 +33,7 @@ db = SQLAlchemy(app)
 
 app.config['SECURITY_PASSWORD_SALT'] = environ.get("SECURITY_PASSWORD_SALT", default="very-important")
 
-from .user import User
+from .user import User, auth as auth_blueprint
 from . import registration, transactions
+
+app.register_blueprint(auth_blueprint)
