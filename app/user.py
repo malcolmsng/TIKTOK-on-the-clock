@@ -88,20 +88,3 @@ def updateBalance():
     except Exception as e:
         db.session.rollback()
         return "An error occurred while updating the User's balance. " + str(e), 406
-
-PASSAGE_APP_ID = os.environ.get("PASSAGE_APP_ID")
-
-class AuthenticationMiddleware(object):
-    def init(self, app):
-        self.app = app
-
-    def call(self, environ, start_response):    
-        request = Request(environ)
-        psg = Passage(PASSAGE_APP_ID)
-        try:
-            user = psg.authenticateRequest(request)
-        except:
-            ret = Response(u'Authorization failed', mimetype='text/plain', status=401)
-            return ret(environ, start_response)
-        environ['user'] = user
-        return self.app(environ, start_response)
