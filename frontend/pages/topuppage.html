@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .font {
+            font-family: 'Montserrat', sans-serif;
+            /* font-family: proxima-nova, sans-serif;
+            font-style: normal;
+            font-weight: 100; */
+        }
+        #spectrum-background {
+            background:
+                linear-gradient(to top left, rgb(24, 247, 255), transparent),
+                linear-gradient(to top right, rgb(255, 17, 100), transparent);
+            background-blend-mode: screen;
+
+        }
+    </style>
+
+    <!-- Vue2 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+    <!-- Axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- Flowbite -->
+    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.3/dist/flowbite.min.css" />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!--iconify-->
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <!-- google font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="main-container" class="font">
+        <div id="spectrum-background" class="text-center pt-6 pb-12 relative mb-16 bg-green-500">
+            <h1 class="text-4xl font-bold text-black mb-4">Top Up</h1>
+
+            <div class="rounded-[30px] absolute m-auto  left-0 right-0 max-w-sm p-4 bg-white drop-shadow-lg">
+                <div class="flex space-x-8">
+                    auto top up thing
+                </div>
+
+                <div class="flex space-x-5 text-white mt-2 text-sm">
+                    <div class="ml-6">Top-up</div>
+                    <div>Withdraw</div>
+                    <div>Scan to pay</div>
+                    <div>Send</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
