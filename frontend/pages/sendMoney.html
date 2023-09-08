@@ -69,8 +69,6 @@
 <body>
     <!-- INSERT CODE FROM HERE -->
     <div id="main-container" class="font">
-
-
         <!-- TOP PART -->
         <div id="spectrum-background" class="text-center pt-6 pb-20 relative mb-10">
             <div class="flex  justify-center relative">
@@ -179,7 +177,8 @@
                             <iconify-icon icon="ep:arrow-right-bold" width="25" height="25"></iconify-icon>
                         </div>
                     </a>
-                    <a class="relative flex items-center p-4 bg-white rounded-[20px] drop-shadow-lg" href="#">
+
+                    <a class="relative flex items-center p-4 bg-white rounded-[20px] drop-shadow-lg" @click =goToSinglePage("hermoineLim") >
                         <div class="ml-4 p-1 mr-4 text-blue-500 rounded-full">
                             <img src="../images/user/Rectangle (5).png">
                         </div>
@@ -191,6 +190,7 @@
                             <iconify-icon icon="ep:arrow-right-bold" width="25" height="25"></iconify-icon>
                         </div>
                     </a>
+
                     <a class="relative flex items-center p-4 bg-white rounded-[20px] drop-shadow-lg" href="#">
                         <div class="ml-4 p-1 mr-4 text-blue-500 rounded-full">
                             <img src="../images/user/Rectangle (6).png">
@@ -203,6 +203,7 @@
                             <iconify-icon icon="ep:arrow-right-bold" width="25" height="25"></iconify-icon>
                         </div>
                     </a>
+
                 </div>
             </div>
 
@@ -319,7 +320,10 @@
                 })
         },
         methods: {
-
+            goToSinglePage: function(username){
+                console.log(username)
+                window.location.assign("./individualSendMoney.html?userName=" + username )
+            }
         },
         created() {
 
