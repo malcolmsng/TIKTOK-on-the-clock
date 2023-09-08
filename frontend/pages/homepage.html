@@ -340,7 +340,7 @@
                     </button>
 
 
-                    <button type="button"
+                    <a type="button" href="loginpage.html"
                         class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-800">
                         <svg class="w-7 h-7 mb-1   text-slate-400 group-hover:text-blue-600" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -350,7 +350,7 @@
                                 d="M19 10h-6a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1Zm-4.5 3.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2ZM12.62 4h2.78L12.539.41a1.086 1.086 0 1 0-1.7 1.352L12.62 4Z" />
                         </svg>
                         <span class="text-xs text-slate-400 group-hover:text-blue-600">Wallet</span>
-                    </button>
+                    </a>
                     <button type="button"
                         class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-800">
                         <svg class="w-7 h-7 mb-1  text-slate-400 group-hover:text-blue-600 " aria-hidden="true"
@@ -365,7 +365,56 @@
 
         </div>
     </div>
+    <script type="module">
+        import { Passage } from 'https://cdn.passage.id/passage-js.js';
 
+        window.isLoading = true;
+        window.isAuthorized = false;
+        window.username = '';
+
+        (async () => {
+            const psg = new Passage('E3hjWQlq03LsYPBMG1ESlWbQ');
+            const user = psg.getCurrentUser();
+            const userInfo = await user.userInfo();
+            console.log(userInfo);
+
+            if (!userInfo) {
+                window.isLoading = false;
+                return;
+            }
+
+            window.username = userInfo.email;
+            window.isAuthorized = false;
+            window.isLoading = false;
+            
+            // try{
+            //     const response = await fetch("/auth-backend", {
+            //         method: 'POST', 
+            //         headers: {
+            //             'Content-Type':  'application/json',
+            //         },
+            //         body: JSON.stringify({
+            //             email: userInfo.email, 
+            //             tt_username: userInfo.user_metadata.tiktok_username, 
+            //             authToken: localStorage.getItem("psg_auth_token"),
+            //         }),
+            //     })
+            //     const data = await response.json()
+            //     if (data) {
+            //         // backend will return session variable or smth
+            //         console.log("Success: ", data)
+            //         window.isAuthorized = true;
+            //         window.isLoading = false;
+            //     }
+            // }
+            // catch (error) {
+            //     alert(error)
+            //     window.isAuthorized = false;
+            //     window.isLoading = false;
+            //     // should redirect back to login page
+            // }
+        })();
+    </script>
 </body>
 
 <script>
@@ -373,6 +422,9 @@
         el: '#main-container',
         data: {
             url: "http://localhost:4242/",
+            isLoading: window.isLoading,
+            isAuthorized: window.isAuthorized,
+            username: window.username
         },
 
         mounted: async function () {

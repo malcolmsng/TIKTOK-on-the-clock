@@ -1,66 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
 
-    <style>
-        .font {
-            font-family: proxima-nova, sans-serif;
-            font-style: normal;
-            font-weight: 100;
-        }
-    </style>
+        <style>
+            .font {
+                font-family: proxima-nova, sans-serif;
+                font-style: normal;
+                font-weight: 100;
+            }
+            #spectrum-background {
+                background:
+                    linear-gradient(to top left, rgb(24, 247, 255), transparent),
+                    linear-gradient(to top right, rgb(255, 17, 100), transparent);
+                background-blend-mode: screen;
+            }
+        </style>
 
-    <!-- Vue2 -->
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
-    <!-- Axios -->
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <!-- Flowbite -->
-    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.3/dist/flowbite.min.css" />
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+        <!-- Vue2 -->
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+        <!-- Axios -->
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <!-- Flowbite -->
+        <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.3/dist/flowbite.min.css" />
+        <!-- Tailwind CSS -->
+        <script src="https://cdn.tailwindcss.com"></script>
+        
+    </head>
 
+    <body id="spectrum-background" class="flex justify-center items-center h-screen">
+        <div id="main-container">
+            <div>
+                <passage-auth :app-id="appId"></passage-auth>
+            </div>
+        </div>
+        <!-- flowbite -->
+        <script src="https://psg.so/web.js"></script>
+        <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
+    </body>
 
+    <script>
+        const vm = new Vue({
+            el: '#main-container',
+            data: {
+                appId: "E3hjWQlq03LsYPBMG1ESlWbQ"
+                // appId: process.env.VUE_APP_PASSAGE_APP_ID
 
-</head>
+            },
+            mounted: async function () {
 
-<body>
-    <!-- INSERT CODE FROM HERE -->
-    <div id="main-container">
-        <p class="font">The quick brown fox jumps over the lazy dog</p>
+            },
+            methods: {
 
+            },
+            created() {
 
-
-
-
-
-
-
-
-    </div>
-    <!-- flowbite -->
-    <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
-</body>
-
-<script>
-    const vm = new Vue({
-        el: '#main-container',
-        data: {
-
-        },
-        mounted: async function () {
-
-        },
-        methods: {
-
-        },
-        created() {
-
-        }
-    });
-</script>
+            }
+        });
+    </script>
 
 </html>
