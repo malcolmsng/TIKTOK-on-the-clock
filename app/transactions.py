@@ -16,7 +16,6 @@ class Transaction(db.Model):
     Recepient_ID = db.Column(db.Integer, db.ForeignKey('user.User_ID'))
     Transaction_Type = db.Column(db.String)
     Amount = db.Column(db.Float)
-    
     def json(self):
         return {
             "transaction_ID": self.transaction_ID,
@@ -24,8 +23,9 @@ class Transaction(db.Model):
             "Recepient_ID": self.Recepient_ID,
             "Transaction_Type": self.Transaction_Type,
             "Amount": self.Amount
-            
+
         }
+
 
 auth = Blueprint('auth', __name__)
 
@@ -68,9 +68,11 @@ def createTransaction():
                 return "Sender has insufficient Balance", 406
 
             # Update Balances of sender and recepient
-            setattr(sender, "Wallet_Balance", sender.Wallet_Balance - data["TransactionAmount"])
-            setattr(recepient, "Wallet_Balance", recepient.Wallet_Balance + data["TransactionAmount"])
-            
+            setattr(sender, "Wallet_Balance",
+                    sender.Wallet_Balance - data["TransactionAmount"])
+            setattr(recepient, "Wallet_Balance",
+                    recepient.Wallet_Balance + data["TransactionAmount"])
+
             # Create a new transaction
             new_Transaction = Transaction()
             new_Transaction.Sender_ID = data["Sender_ID"]
@@ -100,7 +102,8 @@ def viewTransaction():
     data = request.get_json()
     user_ID = data["User_ID"]
     try:
-        transactions = Transaction.query.filter(or_(Transaction.Sender_ID == user_ID, Transaction.Recepient_ID == user_ID)).all()
+        transactions = Transaction.query.filter(
+            or_(Transaction.Sender_ID == user_ID, Transaction.Recepient_ID == user_ID)).all()
         print(transactions)
         if len(transactions):
             return jsonify(
@@ -111,7 +114,7 @@ def viewTransaction():
     except Exception as e:
         db.session.rollback()
         return "An error occurred while creating the transaction. " + str(e), 406
-    
+
 @app.route('/create-checkout-session', methods=['POST'])
 def create_checkout_session():
     try:
@@ -124,13 +127,58 @@ def create_checkout_session():
                 },
             ],
             mode='payment',
-            success_url = 'https://dictionary.cambridge.org/dictionary/english/success',
-            cancel_url = 'http://localhost/TIKTOK-on-the-clock/frontend/pages/topuppage.html',
+            success_url='http://localhost/TIKTOK-on-the-clock/frontend/pages/homepage.html',
+            cancel_url='http://localhost/TIKTOK-on-the-clock/frontend/pages/topuppage.html',
         )
     except Exception as e:
         return str(e)
 
     return redirect(checkout_session.url, code=303)
+
+
+@app.route('/create-checkout-session/buy-now-pay-later', methods=['POST'])
+def create_checkout_session_buy_now():
+    try:
+        stripe.checkout.Session.create(
+            payment_method_types=['card', 'afterpay_clearpay'],
+            line_items=[{
+                'price_data': {
+                    'currency': 'usd',
+                    'product_data': {
+                        'name': 'T-shirt',
+                    },
+                    # Make sure the total amount fits within Afterpay transaction amount limits:
+                    # https://stripe.com/docs/payments/afterpay-clearpay#collection-schedule
+                    'unit_amount': 2000,
+                },
+                'quantity': 1,
+            }],
+            mode='payment',
+            shipping_address_collection={
+                # Specify which shipping countries Checkout should provide as options for shipping locations
+                'allowed_countries': ['AU', 'GB', 'NZ', 'US'],
+            },
+            # If you already have the shipping address, provide it in payment_intent_data:
+            # payment_intent_data: {
+            #   shipping: {
+            #     name: 'Jenny Rosen',
+            #     address: {
+            #       line1: '1234 Main Street',
+            #       city: 'San Francisco',
+            #       state: 'CA',
+            #       country: 'US',
+            #       postal_code: '94111',
+            #     },
+            #   },
+            # },
+            success_url='https://example.com/success',
+            cancel_url='https://example.com/cancel',
+        )
+    except Exception as e:
+        return str(e)
+
+    return redirect(create_checkout_session_buy_now.url, code=303)
+
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
@@ -138,29 +186,28 @@ def webhook():
         payload = request.data
 
         sig_header = request.headers.get('Stripe-Signature')
-        
-        #creating this event will ensure that post request is sent by stripe
+
+        # creating this event will ensure that post request is sent by stripe
         event = stripe.Webhook.construct_event(payload, sig_header, webhookKey)
-        
+
     except ValueError as e:
-    # Invalid payload
-        return '',400
+        # Invalid payload
+        return '', 400
     except stripe.error.SignatureVerificationError as e:
-    # Invalid signature
-        return '',500
- 
+        # Invalid signature
+        return '', 500
+
     # Passed signature verification, transaction has occured and user has transferred that amount
 
-    #event object contains all important info including transacted amount
-    #amount transected comes in cents(have to divide by 100 for dollar value)
+    # event object contains all important info including transacted amount
+    # amount transected comes in cents(have to divide by 100 for dollar value)
     print('event is printed')
     print(event)
 
-    ##to do for aloysius
-    ##fetch the price from the event json object (which comes in cents so divide by 100)
-    ##update the user DB on the amount of value topped up
-    event = event.get_json()
-    amount = event["data"]["object"]["amount_total"]
+    # to do for aloysius
+    # fetch the price from the event json object (which comes in cents so divide by 100)
+    # update the user DB on the amount of value topped up
+    amount = event["data"]["object"]["amount_total"]/100
     email = event["data"]["object"]["customer_details"]["email"]
 
     try:

@@ -45,7 +45,7 @@
 	<body>
 		<div id="main-container overflow-y-scroll" class="font">
 			<div id="spectrum-background" class="text-center pt-6 pb-12 relative mb-16 bg-green-500">
-				<div class="flex  justify-center relative">
+				<div class="flex justify-center relative">
 					<a href="../pages/homepage.html">
 						<iconify-icon class="absolute left-6 top-2" icon="ep:arrow-left-bold" width="25" height="25">
 						</iconify-icon>
@@ -165,7 +165,7 @@
 
 				<!-- buy now pay later-->
 
-				<div class="rounded-[30px] m-auto  mb-20 left-0 right-0 mt-4 max-w-sm p-4 bg-white drop-shadow-lg">
+				<div class="rounded-[30px] m-auto mb-20 left-0 right-0 mt-4 max-w-sm p-4 bg-white drop-shadow-lg">
 					<div class="flex">
 						<div class="font-bold space-x-8 flex items-center">
 							<button
@@ -185,17 +185,19 @@
 							<p class="text-sm">The Future of Shopping: Pay on Your Terms</p>
 						</div>
 						<div class="flex items-center">
-							<button type="submit">
-								<iconify-icon
-									icon="fe:arrow-right"
-									class="text-black hover:bg-sky-100"
-									width="32"
-									height="28"
-								></iconify-icon>
-							</button>
+							<form target="_blank" action="http://127.0.0.1:4242/create-checkout-session" method="POST">
+								<button type="submit">
+									<iconify-icon
+										icon="fe:arrow-right"
+										class="text-black hover:bg-sky-100"
+										width="32"
+										height="28"
+									></iconify-icon>
+								</button>
+							</form>
 						</div>
 					</div>
-					<div id="payment-method-messaging-element"></div>
+					<!-- <div id="payment-method-messaging-element"></div> -->
 				</div>
 
 				<!-- bottom navbar -->
@@ -302,7 +304,7 @@
 				fontFamily: "Ideal Sans, system-ui, sans-serif",
 			},
 		};
-		const elements = stripe.elements({appearance});
+		const elements = stripe.elements({ appearance });
 		const options = {
 			amount: 10000, // $99.00 USD
 			currency: "USD",
