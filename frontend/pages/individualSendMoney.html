@@ -55,11 +55,11 @@
 
 
         .input-group>.currency,
-        .input-group>input[type="tel"] {
+        .input-group>input[type="number"] {
             color: black;
         }
 
-        .input-group>input[type="tel"] {
+        .input-group>input[type="number"] {
             width: 100%;
             border: none;
             outline: none;
@@ -130,7 +130,7 @@
                 <form>
                     <div class="input-group">
                         <span class="currency pt-5 text-gray-900  rounded-lg bg-white sm:text-5xl text-5xl">S$</span>
-                        <input id ="amount" v-model="amount"  @change ="getTransaction()" type="tel" placeholder="0.00" maxLength="19" aria-label="amount" class="input-amount  p-4 text-gray-900  rounded-lg bg-white sm:text-5xl text-5xl">
+                        <input id ="amount" v-model="amount"  @change ="getTransaction()" type="number" placeholder="0.00" maxLength="19" aria-label="amount" class="input-amount  p-4 text-gray-900  rounded-lg bg-white sm:text-5xl text-5xl">
                     </div>
 
                 </form>
