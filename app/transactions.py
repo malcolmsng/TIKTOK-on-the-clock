@@ -1,18 +1,19 @@
 from app import app, db
-from flask import jsonify, request, url_for, render_template
+from flask import jsonify, request, redirect
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 from . import User
 from sqlalchemy import or_
+import stripe
 
 class Transaction(db.Model):
     __tablename__ = 'transactions'
 
     transaction_ID = db.Column(db.Integer, primary_key=True)
-    Sender_ID = db.Column(db.Integer)
-    Recepient_ID = db.Column(db.Integer)
+    Sender_ID = db.Column(db.Integer, db.ForeignKey('user.User_ID'))
+    Recepient_ID = db.Column(db.Integer, db.ForeignKey('user.User_ID'))
     Transaction_Type = db.Column(db.String)
-    Amount = db.Column(db.Integer)
+    Amount = db.Column(db.Float)
     
     def json(self):
         return {
@@ -40,14 +41,14 @@ def createTransaction():
     try:
         sender = User.query.filter_by(User_ID=data["Sender_ID"]).first()
         recepient = User.query.filter_by(User_ID=data["Recepient_ID"]).first()
-        if (sender and recepient):
+        if ((sender and recepient) and (sender != recepient)):
             # Check if sender has enough balance for transaction
             if (sender.Wallet_Balance - data["TransactionAmount"] < 0):
                 return "Sender has insufficient Balance", 406
 
             # Update Balances of sender and recepient
             setattr(sender, "Wallet_Balance", sender.Wallet_Balance - data["TransactionAmount"])
-            setattr(recepient, "Wallet_Balance", sender.Wallet_Balance + data["TransactionAmount"])
+            setattr(recepient, "Wallet_Balance", recepient.Wallet_Balance + data["TransactionAmount"])
             
             # Create a new transaction
             new_Transaction = Transaction()
@@ -89,3 +90,53 @@ def viewTransaction():
     except Exception as e:
         db.session.rollback()
         return "An error occurred while creating the transaction. " + str(e), 406
+    
+@app.route('/create-checkout-session', methods=['POST'])
+def create_checkout_session():
+    try:
+        checkout_session = stripe.checkout.Session.create(
+            line_items=[
+                {
+                    # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+                    'price': CUSTOMPRICEKEY,
+                    'quantity': 1,
+                },
+            ],
+            mode='payment',
+            success_url = 'https://dictionary.cambridge.org/dictionary/english/success',
+            cancel_url = 'https://dictionary.cambridge.org/dictionary/english/failure',
+        )
+    except Exception as e:
+        return str(e)
+
+    return redirect(checkout_session.url, code=303)
+
+@app.route('/webhook', methods=['POST'])
+def webhook():
+    try:
+        payload = request.data
+
+        sig_header = request.headers.get('Stripe-Signature')
+        
+        #creating this event will ensure that post request is sent by stripe
+        event = stripe.Webhook.construct_event(payload, sig_header, webhookKey)
+        
+    except ValueError as e:
+    # Invalid payload
+        return '',400
+    except stripe.error.SignatureVerificationError as e:
+    # Invalid signature
+        return '',500
+ 
+    # Passed signature verification, transaction has occured and user has transferred that amount
+
+    #event object contains all important info including transacted amount
+    #amount transected comes in cents(have to divide by 100 for dollar value)
+    print('event is printed')
+    print(event)
+
+    ##to do for aloysius
+    ##fetch the price from the event json object (which comes in cents so divide by 100)
+    ##update the user DB on the amount of value topped up
+
+    return '', 200

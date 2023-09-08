@@ -2,6 +2,8 @@ from app import app, db
 from flask import jsonify, request, url_for, render_template
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
+from passageidentity import Passage
+import os
 
 class User(db.Model):
     __tablename__ = 'user'
@@ -10,7 +12,7 @@ class User(db.Model):
     Username = db.Column(db.String)
     EmailAddress = db.Column(db.String)
     Password = db.Column(db.String)
-    Wallet_Balance = db.Column(db.Integer)
+    Wallet_Balance = db.Column(db.Float)
     Phone_Number = db.Column(db.Integer)
     
 
@@ -87,3 +89,19 @@ def updateBalance():
         db.session.rollback()
         return "An error occurred while updating the User's balance. " + str(e), 406
 
+PASSAGE_APP_ID = os.environ.get("PASSAGE_APP_ID")
+
+class AuthenticationMiddleware(object):
+    def init(self, app):
+        self.app = app
+
+    def call(self, environ, start_response):    
+        request = Request(environ)
+        psg = Passage(PASSAGE_APP_ID)
+        try:
+            user = psg.authenticateRequest(request)
+        except:
+            ret = Response(u'Authorization failed', mimetype='text/plain', status=401)
+            return ret(environ, start_response)
+        environ['user'] = user
+        return self.app(environ, start_response)
