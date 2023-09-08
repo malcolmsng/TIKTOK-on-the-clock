@@ -104,7 +104,7 @@ def create_checkout_session():
             ],
             mode='payment',
             success_url = 'https://dictionary.cambridge.org/dictionary/english/success',
-            cancel_url = 'https://dictionary.cambridge.org/dictionary/english/failure',
+            cancel_url = 'http://localhost/TIKTOK-on-the-clock/frontend/pages/topuppage.html',
         )
     except Exception as e:
         return str(e)
@@ -138,5 +138,20 @@ def webhook():
     ##to do for aloysius
     ##fetch the price from the event json object (which comes in cents so divide by 100)
     ##update the user DB on the amount of value topped up
+    event = event.get_json()
+    amount = event["data"]["object"]["amount_total"]
+    email = event["data"]["object"]["customer_details"]["email"]
 
-    return '', 200
+    try:
+        user = User.query.filter_by(EmailAddress=email).first()
+        if user:
+            if (user.Wallet_Balance + amount < 0):
+                return "User has insufficient Balance", 200
+            else:
+                setattr(user, "Wallet_Balance", user.Wallet_Balance + amount)
+                db.session.commit()
+                return "User Balance Updated", 200
+        return "User not found", 404
+    except Exception as e:
+        db.session.rollback()
+        return "An error occurred while updating the User's balance. " + str(e), 406
