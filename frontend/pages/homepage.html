@@ -115,7 +115,7 @@
             <div class="w-full max-w-md bg-white sm:p-8">
 
                 <div class="flow-root">
-                    <ul role="list" class="divide-y divide-gray-200">
+                    <ul role="list" class="divide-y divide-gray-200 ml-5 mr-2">
                         <li class="py-3 sm:py-4">
                             <div class="flex items-center space-x-4">
                                 <div class="flex-shrink-0">
@@ -126,7 +126,7 @@
                                         Account Settings
                                     </p>
                                 </div>
-                                <div class="inline-flex items-center text-base font-semibold text-gray-900 ">
+                                <div class="inline-flex items-center text-base font-semibold text-gray-900">
                                     <iconify-icon icon="ep:arrow-right-bold" width="25" height="25"></iconify-icon>
                                 </div>
                             </div>
@@ -161,6 +161,7 @@
                                 </div>
                             </div>
                         </li>
+
                     </ul>
                 </div>
             </div>
@@ -179,63 +180,64 @@
 
                 <div id="scrollContainer"
                     class="no-scrollbar flex flex-no-wrap overflow-x-scroll scrolling-touch items-start">
-                    <div style="height:160px" class="flex-none w-2/3 md:w-1/3 mr-8 border rounded-lg"
+                    <div style ="height: 150px;" class="flex-none w-2/3 md:w-1/3 mr-8 border rounded-lg"
                         id="card-spectrum-background-2">
-                        <a href="#" class="space-y-4">
+                        
+                        <a href="#" class="space-y-4 relative">
                             <div class="px-4 py-2">
                                 <div class="text-lg leading-6 font-medium space-y-1">
-                                    <h3 class="font-bold text-white text-md mb-1">
+                                    <h3 class="font-bold text-white text-md">
                                         Top up using PayNow VPA
                                     </h3>
                                 </div>
-                                <div class="">
+                                <div class="absolute right-3">
                                     <img src="../images/mobile-iso-color.png">
                                 </div>
                             </div>
                         </a>
                     </div>
 
-                    <div style="height:160px" class="flex-none w-2/3 md:w-1/3 mr-8 md:pb-4 border rounded-lg"
+                    <div style ="height: 150px;"  class="flex-none w-2/3 md:w-1/3 mr-8 md:pb-4 border rounded-lg"
                         id="card-spectrum-background-1">
-                        <a href="#" class="space-y-4">
+                        <a href="#" class="space-y-4 relative">
                             <div class="px-4 py-2">
                                 <div class="text-lg leading-6 font-medium space-y-1">
-                                    <h3 class="font-bold text-white text-lg mb-2">
+                                    <h3 class="font-bold text-white text-lg ">
                                         How we keep your wallet secure
                                     </h3>
                                 </div>
-                                <div class="flex">
+                                <div class="flex absolute right-3 top-10">
                                     <img src="../images/key-iso-color.png">
                                     <img src="../images/lock-iso-color.png">
                                 </div>
                             </div>
                         </a>
                     </div>
-                    <div style="height:160px" class="flex-none w-2/3 md:w-1/3 mr-8 md:pb-4 border rounded-lg"
+                    <div style ="height: 150px;"  class="flex-none w-2/3 md:w-1/3 mr-8 md:pb-4 border rounded-lg"
                         id="card-spectrum-background-2">
-                        <a href="#" class="space-y-4">
+                        <a href="#" class="space-y-4 relative">
                             <div class="px-4 py-2">
                                 <div class="text-lg leading-6 font-medium space-y-1">
-                                    <h3 class="font-bold text-white text-lg mb-2">
+                                    <h3 class="font-bold text-white text-lg">
                                         Link any bank account to top-up
                                     </h3>
                                 </div>
-                                <div class="">
+                                <div class="absolute right-10 top-10">
                                     <img src="../images/card-iso-color.png">
                                 </div>
                             </div>
                         </a>
                     </div>
-                    <div style="height:160px" class="flex-none w-2/3 md:w-1/3 mr-8 md:pb-4 border rounded-lg"
+                    <div  style ="height: 150px;"  class="flex-none w-2/3 md:w-1/3 mr-8 md:pb-4 border rounded-lg"
                         id="card-spectrum-background-1">
-                        <a href="#" class="space-y-4">
+                        <a href="#" class="space-y-4 relative">
                             <div class="px-4 py-2">
                                 <div class="text-lg leading-6 font-medium space-y-1">
                                     <h3 class="font-bold text-white text-lg mb-2">
                                         Transfer to any bank account
                                     </h3>
                                 </div>
-                                <div class="">
+                                <div class="absolute right-10 top-12">
                                     <img src="../images/wallet-iso-color.png">
                                 </div>
                             </div>
@@ -250,48 +252,51 @@
                     <h2 class="text-xl font-bold">
                         Wallet Transactions
                     </h2>
+
+                    <a class = "underline underline-offset-2" href = "#">
+                        View all
+                    </a>
                 </div>
 
-                <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
-                    <div class="flex items-center p-4 bg-white rounded-[20px] drop-shadow-lg">
-                        <div class="ml-4 p-3 mr-4 text-blue-500 bg-slate-200 rounded-full">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                <path
-                                    d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z">
-                                </path>
-                            </svg>
+                <div class="grid gap-2 mb-6 md:grid-cols-2 xl:grid-cols-4">
+                    
+                    <a class="relative flex items-center p-4 bg-white rounded-[20px] drop-shadow-lg" href ="#">
+                        <div class="ml-4 p-1 mr-4 text-blue-500 bg-slate-200 rounded-full">
+                            <img src = "../images/bag-dynamic-color.png">
                         </div>
-                        <div>
+                        <div class = "ml-3">
                             <h5 class="text-lg font-bold tracking-tight text-gray-900">Payment</h5>
                             <p class="font-normal text-gray-700 ">To TikTok Shop 123452</p>
                         </div>
-                    </div>
-                    <div class="flex items-center p-4 bg-white rounded-[20px] drop-shadow-lg">
-                        <div class="ml-4 p-3 mr-4 text-green-500 bg-slate-200  rounded-full">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                <path
-                                    d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z">
-                                </path>
-                            </svg>
+                        <div class="absolute right-6 text-base font-semibold text-gray-90">
+                            <iconify-icon icon="ep:arrow-right-bold" width="25" height="25"></iconify-icon>
                         </div>
-                        <div>
+                    </a>
+                    <a class="relative flex items-center p-4 bg-white rounded-[20px] drop-shadow-lg" href ="#">
+                        <div class="ml-4 p-1 mr-4 text-blue-500 bg-slate-200 rounded-full">
+                            <img src = "../images/bag-dynamic-color.png">
+                        </div>
+                        <div class = "ml-3">
                             <h5 class="text-lg font-bold tracking-tight text-gray-900">Payment</h5>
                             <p class="font-normal text-gray-700 ">To TikTok Shop 123452</p>
                         </div>
-                    </div>
-                    <div class="flex items-center p-4 bg-white rounded-[20px] drop-shadow-lg">
-                        <div class="ml-4 p-3 mr-4 text-red-500 bg-slate-200 rounded-full">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                <path
-                                    d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z">
-                                </path>
-                            </svg>
+                        <div class="absolute right-6 text-base font-semibold text-gray-90">
+                            <iconify-icon icon="ep:arrow-right-bold" width="25" height="25"></iconify-icon>
                         </div>
-                        <div>
+                    </a>
+                    <a class="relative flex items-center p-4 bg-white rounded-[20px] drop-shadow-lg" href ="#">
+                        <div class="ml-4 p-1 mr-4 text-blue-500 bg-slate-200 rounded-full">
+                            <img src = "../images/bag-dynamic-color.png">
+                        </div>
+                        <div class = "ml-3">
                             <h5 class="text-lg font-bold tracking-tight text-gray-900">Payment</h5>
                             <p class="font-normal text-gray-700 ">To TikTok Shop 123452</p>
                         </div>
-                    </div>
+                        <div class="absolute right-6 text-base font-semibold text-gray-90">
+                            <iconify-icon icon="ep:arrow-right-bold" width="25" height="25"></iconify-icon>
+                        </div>
+                    </a>
+
                 </div>
             </div>
 
@@ -349,10 +354,9 @@
                 </div>
             </div>
 
-
         </div>
-        <!-- flowbite -->
-        <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
+        </div>
+
 </body>
 
 <script>
@@ -372,5 +376,6 @@
         }
     });
 </script>
+
 
 </html>
