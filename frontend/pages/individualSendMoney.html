@@ -46,6 +46,25 @@
             scrollbar-width: none;
             /* Firefox */
         }
+
+        .input-group {
+            padding: 0.4em 0;
+            width: 100%;
+            display: flex;
+        }
+
+
+        .input-group>.currency,
+        .input-group>input[type="tel"] {
+            color: black;
+        }
+
+        .input-group>input[type="tel"] {
+            width: 100%;
+            border: none;
+            outline: none;
+        }
+
     </style>
 
     <!-- Vue2 -->
@@ -108,7 +127,13 @@
 
             <!-- MIDDLE -->
             <div>
-                <h1 class="text-5xl font-medium text-black mb-2">S$12.50</h1>
+                <form>
+                    <div class="input-group">
+                        <span class="currency pt-5 text-gray-900  rounded-lg bg-white sm:text-5xl text-5xl">S$</span>
+                        <input id ="amount" v-model="amount"  @change ="getTransaction()" type="tel" placeholder="0.00" maxLength="19" aria-label="amount" class="input-amount  p-4 text-gray-900  rounded-lg bg-white sm:text-5xl text-5xl">
+                    </div>
+
+                </form>
                 <p class="font-normal text-gray-700 mb-3">Transferable balance: S$200</p>
 
                 <textarea id="message" rows="4" style="height: 150px"
@@ -127,7 +152,7 @@
 
 
                     <button type="button"
-                        class="absolute z-10 mt-60 w-full px-5 py-3 text-xl font-semibold text-white bg-black focus:ring-4 focus:outline-none focus:ring-black rounded-[50px] text-center">Pay
+                        class="absolute z-10 mt-40 w-full px-5 py-3 text-xl font-semibold text-white bg-black focus:ring-4 focus:outline-none focus:ring-black rounded-[50px] text-center">Pay
                         S$12.50</button>
                 </div>
 
@@ -207,7 +232,8 @@
         data: {
             url: "http://localhost:5000/",
             username: "",
-            name: ""
+            name: "",
+            amount:""
         },
         mounted: async function () {
             var query = window.location.search.substring(4);
@@ -218,7 +244,6 @@
                 this.name = "Hermoine Lim"
             }
 
-
             axios.get(this.url + "viewTransaction")
                 .then(response => {
                     console.log(response)
@@ -228,6 +253,9 @@
                 })
         },
         methods: {
+            getTransaction(){
+                console.log(this.amount)
+            }
 
         },
         created() {
