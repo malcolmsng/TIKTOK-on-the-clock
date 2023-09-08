@@ -363,10 +363,16 @@
     const vm = new Vue({
         el: '#main-container',
         data: {
-
+            url: "http://localhost:5000/",
         },
         mounted: async function () {
-
+            axios.get(this.url + "viewTransaction")
+            .then(response =>{
+                console.log(response)
+            })
+            .catch(error => {
+                console.log(error.message)
+            })
         },
         methods: {
 
