@@ -67,7 +67,7 @@ def createTransaction():
         return "An error occurred while creating the transaction. " + str(e), 406
 
 # Get the transactions of a user using their User_ID
-@app.route("/viewTransaction", methods=['POST'])
+@app.route("/viewTransaction", methods=['GET'])
 def viewTransaction():
     """
     Sample Request
