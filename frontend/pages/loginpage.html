@@ -12,6 +12,12 @@
                 font-style: normal;
                 font-weight: 100;
             }
+            #spectrum-background {
+                background:
+                    linear-gradient(to top left, rgb(24, 247, 255), transparent),
+                    linear-gradient(to top right, rgb(255, 17, 100), transparent);
+                background-blend-mode: screen;
+            }
         </style>
 
         <!-- Vue2 -->
@@ -25,18 +31,15 @@
         
     </head>
 
-    <body>
-        <script src="https://psg.so/web.js"></script>
+    <body id="spectrum-background" class="flex justify-center items-center">
         <div id="main-container">
-            <p class="font">The quick brown fox jumps over the lazy dog</p>
-            <div class="authContainer">
+            <div>
                 <passage-auth :app-id="appId"></passage-auth>
             </div>
-            <div>{{appId}}</div>
         </div>
         <!-- flowbite -->
+        <script src="https://psg.so/web.js"></script>
         <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
-        
     </body>
 
     <script>
