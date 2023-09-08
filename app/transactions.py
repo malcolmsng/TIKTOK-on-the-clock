@@ -1,10 +1,12 @@
 from app import app, db, CUSTOMPRICEKEY, webhookKey
-from flask import jsonify, request, redirect
+from flask import jsonify, request, redirect, Blueprint, g
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 from . import User
 from sqlalchemy import or_
 import stripe
+import os
+from passageidentity import Passage, PassageError
 
 class Transaction(db.Model):
     __tablename__ = 'transactions'
@@ -25,8 +27,27 @@ class Transaction(db.Model):
             
         }
 
+auth = Blueprint('auth', __name__)
+
+PASSAGE_API_KEY = os.environ.get('PASSAGE_API_KEY')
+PASSAGE_APP_ID = os.environ.get('PASSAGE_APP_ID')
+
+try:
+    psg = Passage(PASSAGE_APP_ID, PASSAGE_API_KEY)
+except PassageError as e:
+    print(e)
+    exit()
+
+
+@auth.before_request
+def before_request():
+    try:
+        g.user = psg.authenticateRequest(request)
+    except PassageError as e:
+        return "Not Authenticated", 404
+
 # Route to create a new transaction
-@app.route("/transaction", methods=['POST'])
+@auth.route("/transaction", methods=['POST'])
 def createTransaction():
     """
     Sample Request
@@ -68,7 +89,7 @@ def createTransaction():
         return "An error occurred while creating the transaction. " + str(e), 406
 
 # Get the transactions of a user using their User_ID
-@app.route("/viewTransaction", methods=['GET'])
+@auth.route("/viewTransaction", methods=['GET'])
 def viewTransaction():
     """
     Sample Request

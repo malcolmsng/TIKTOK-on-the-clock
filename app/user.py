@@ -46,7 +46,7 @@ def before_request():
     try:
         g.user = psg.authenticateRequest(request)
     except PassageError as e:
-        return jsonify({'error': e})
+        return "Not Authenticated", 404
 
 # Function and Route for user login
 @app.route("/login", methods=['POST'])
@@ -66,7 +66,7 @@ def login():
         return "Invalid user credentials", 401
 
 # Function and Route for getting All Users in the DB
-@app.route("/user")
+@auth.route("/user")
 def getAllUser():
     userList = User.query.all()
     
@@ -74,7 +74,7 @@ def getAllUser():
     
 
 # Function and Route for getting a User by ID
-@app.route("/user/<int:id>")
+@auth.route("/user/<int:id>")
 def getUserByID(id: int):
     userList = User.query.filter_by(User_ID=id).all()
     if len(userList):
@@ -84,7 +84,7 @@ def getUserByID(id: int):
     return "There are no such user with ID: " + str(id), 406
 
 # Function and Route to update a User's Balance
-@app.route("/updateBalance", methods=['PUT'])
+@auth.route("/updateBalance", methods=['PUT'])
 def updateBalance():
     """
     Sample Request
