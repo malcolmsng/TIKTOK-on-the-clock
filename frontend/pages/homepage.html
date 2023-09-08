@@ -357,7 +357,56 @@
 
         </div>
     </div>
+    <script type="module">
+        import { Passage } from 'https://cdn.passage.id/passage-js.js';
 
+        window.isLoading = true;
+        window.isAuthorized = false;
+        window.username = '';
+
+        (async () => {
+            const psg = new Passage('E3hjWQlq03LsYPBMG1ESlWbQ');
+            const user = psg.getCurrentUser();
+            const userInfo = await user.userInfo();
+            console.log(userInfo);
+
+            if (!userInfo) {
+                window.isLoading = false;
+                return;
+            }
+
+            window.username = userInfo.email;
+            window.isAuthorized = false;
+            window.isLoading = false;
+            
+            // try{
+            //     const response = await fetch("/auth-backend", {
+            //         method: 'POST', 
+            //         headers: {
+            //             'Content-Type':  'application/json',
+            //         },
+            //         body: JSON.stringify({
+            //             email: userInfo.email, 
+            //             tt_username: userInfo.user_metadata.tiktok_username, 
+            //             authToken: localStorage.getItem("psg_auth_token"),
+            //         }),
+            //     })
+            //     const data = await response.json()
+            //     if (data) {
+            //         // backend will return session variable or smth
+            //         console.log("Success: ", data)
+            //         window.isAuthorized = true;
+            //         window.isLoading = false;
+            //     }
+            // }
+            // catch (error) {
+            //     alert(error)
+            //     window.isAuthorized = false;
+            //     window.isLoading = false;
+            //     // should redirect back to login page
+            // }
+        })();
+    </script>
 </body>
 
 <script>
@@ -365,6 +414,9 @@
         el: '#main-container',
         data: {
             url: "http://localhost:5000/",
+            isLoading: window.isLoading,
+            isAuthorized: window.isAuthorized,
+            username: window.username
         },
         mounted: async function () {
             axios.get(this.url + "viewTransaction")
