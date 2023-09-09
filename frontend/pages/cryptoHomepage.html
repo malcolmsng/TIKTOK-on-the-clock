@@ -12,7 +12,7 @@
 			/* font-family: proxima-nova, sans-serif;
             font-style: normal;
             font-weight: 100; */
-			}
+		}
 
 		#spectrum-background {
 			background: linear-gradient(to top left, rgb(24, 247, 255), transparent),
@@ -68,27 +68,24 @@
 	<div id="main-container" class="font">
 		<!-- BALANCE -->
 		<div id="spectrum-background" class="text-center pt-6 pb-12 relative mb-16">
-			<h4 class="text-2xl font-normal text-black mb-2">Your Balance</h4>
-			<h1 class="text-4xl font-bold text-black mb-4">S${{userBalance}}</h1>
+			<h4 class="text-2xl font-normal text-black mb-2">Your TikTok Token Balance</h4>
 
-			
-			<div class="flex justify-center items-center">
-				<a class="absolute left-6 z-10 inline-flex items-center text-base font-semibold text-gray-900"
-					href="cryptoHomepage.html">
+			<div class = "flex justify-center items-center">
+				<a class="absolute left-6 z-10 inline-flex items-center text-base font-semibold text-gray-900" href ="homepage.html">
 					<iconify-icon icon="ep:arrow-left-bold" width="25" height="25"></iconify-icon>
-				</a>
+                </a>
 
-				<img style="height: 160px" src="../images/Vector.png" class="absolute z-10 top-16 right-10"/>
-				<img src = "../images/card1.png" class = "absolute z-20 relative mb-4" style = "width: 270px; height: 160px">
-				
-				<a class="absolute right-6 z-10 inline-flex items-center text-base font-semibold text-gray-900"
-					href="cryptoHomepage.html">
+				<h1 class="text-4xl font-bold text-black mb-4 relative">S${{userBalance}}</h1>
+
+
+				<a class="absolute right-6 z-10 inline-flex items-center text-base font-semibold text-gray-900" href ="homepage.html">
 					<iconify-icon icon="ep:arrow-right-bold" width="25" height="25"></iconify-icon>
 				</a>
 			</div>
+		
+
+			<img style="height: 140px" src="../images/Vector.png" class="absolute top-4 right-8" />
 			
-
-
 			<div class="rounded-[30px] absolute m-auto left-0 right-0 max-w-sm p-4 bg-black drop-shadow-lg">
 				<div class="flex space-x-8">
 					<a type="button" href="topuppage.html"
@@ -392,45 +389,47 @@
 				// }
 			})();
 		</script>
-
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.js"></script>
 </body>
 
 <script>
 	const vm = new Vue({
 		el: "#main-container",
 
-			data: {
-				url: "http://localhost:4242/",
-				backendURL:"http://127.0.0.1:4242/",
-				userBalance: 0,
-				isLoading: window.isLoading,
-				isAuthorized: window.isAuthorized,
-				username: window.username,
-			},
+		data: {
+			url: "http://localhost:4242/",
+			userBalance: 0,
+			isLoading: window.isLoading,
+			isAuthorized: window.isAuthorized,
+			username: window.username,
+		},
 
-			mounted: async function () {
-				axios
-					.get(this.backendURL + "viewTransaction/4")
-					.then(response => {
-						console.log(response);
-					})
-					.catch(error => {
-						console.log(error.message);
-					});
+		mounted: async function () {
+			axios
+				.get(this.url + "viewTransaction", {
+					data: {
+						User_ID: 4,
+					},
+				})
+				.then(response => {
+					console.log(response);
+				})
+				.catch(error => {
+					console.log(error.message);
+				});
 
-				axios
-					.get(this.backendURL + "/user/4")
-					.then(response => {
-						this.userBalance = response["data"][0]["Wallet_Balance"];
-						console.log(userBalance);
-					})
-					.catch(error => {
-						console.log(error.message);
-					});
-			},
-			methods: {},
-			created() {},
-		});
-	</script>
+			axios
+				.get(this.url + "/user/4")
+				.then(response => {
+					this.userBalance = response["data"][0]["Wallet_Balance"];
+					console.log(userBalance);
+				})
+				.catch(error => {
+					console.log(error.message);
+				});
+		},
+		methods: {},
+		created() {},
+	});
+</script>
+
 </html>
