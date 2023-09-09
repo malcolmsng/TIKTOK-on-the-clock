@@ -38,20 +38,19 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet" />
 
-	<!-- buy now pay later script  -->
-	<script src="https://js.stripe.com/v3/"></script>
-</head>
-
-<body>
-	<div id="main-container overflow-y-scroll" class="font">
-		<div id="spectrum-background" class="text-center pt-6 pb-8 relative mb-4 bg-green-500">
-			<div class="flex justify-center relative">
-				<a href="../pages/homepage.html">
-					<iconify-icon class="absolute left-6 top-2" icon="ep:arrow-left-bold" width="25" height="25">
-					</iconify-icon>
-				</a>
-				<h1 class="text-4xl font-bold text-black mb-8">Top Up</h1>
-			</div>
+		<!-- buy now pay later script  -->
+		<script src="https://js.stripe.com/v3/"></script>
+	</head>
+	<body>
+		<div id="main-container" class="font overflow-y-scroll">
+			<div id="spectrum-background" class="text-center pt-6 pb-12 relative mb-16 bg-green-500">
+				<div class="flex justify-center relative">
+					<a href="../pages/homepage.html">
+						<iconify-icon class="absolute left-6 top-2" icon="ep:arrow-left-bold" width="25" height="25">
+						</iconify-icon>
+					</a>
+					<h1 class="text-4xl font-bold text-black mb-4">Top Up</h1>
+				</div>
 
 			<div class="relative flex items-center p-4 bg-white rounded-[20px] drop-shadow-lg mx-4" href="#">
 				<div class="ml-1 font-bold space-x-8 flex items-center">
@@ -132,7 +131,7 @@
 					</a>
 
 					<!-- Crypto wallet -->
-					<a class="relative flex items-center p-4 bg-white rounded-[20px] drop-shadow-lg" href="#">
+					<div class="relative flex items-center p-4 bg-white rounded-[20px] drop-shadow-lg">
 						<div class="ml-4 font-bold space-x-8 flex items-center">
 							<button type="button"
 								class="text-white bg-slate-200 hover:bg-slate-400 focus:ring-4 focus:outline-none focus:ring-slate-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center">
@@ -145,10 +144,10 @@
 							<h5 class="text-lg font-bold tracking-tight text-gray-900">Crypto</h5>
 							<p class="font-normal text-xs  text-gray-700 ">Use your crypto wallet</p>
 						</div>
-						<div class="absolute right-6 text-base font-semibold text-gray-90">
+						<a class="absolute right-6 text-base font-semibold text-gray-90" @click="connectWallet" href="./cryptotopuppage.html">
 							<iconify-icon icon="ep:arrow-right-bold" width="25" height="25"></iconify-icon>
-						</div>
-					</a>
+						</a>
+					</div>
 
 					<!-- Buy Now pay later -->
 					<a class="relative flex items-center p-4 bg-white rounded-[20px] drop-shadow-lg" href="#">
@@ -233,9 +232,51 @@
 
 		},
 		methods: {
-			goToShoppingPage: function () {
-				window.location.assign("./mainShopping.html")
-			}
+			goToShoppingPage: function(){
+                window.location.assign("./mainShopping.html")
+            },
+			checkConnectedWalletExist: async function(){
+				console.log('clicked')
+				try {
+					const { ethereum } = window;
+					if (!ethereum) {
+						connectWallet()
+					} else {
+						console.log("We have the ethereum object", ethereum);
+					}
+					const accounts = await ethereum.request({ method: "eth_accounts" });
+					if (accounts.length !== 0) {
+						const account = accounts[0];
+						console.log("Found an authorized account:", account);
+						this.currentAccount = account;
+						return true;
+					} else {
+						console.log("No authorized account found");
+						return false;
+					}
+				} catch (error) {
+					console.log(error);
+					return false;
+				}
+			},
+			async connectWallet(){
+				console.log('clicked')
+				try {
+				const { ethereum } = window;
+				if (!ethereum) {
+					alert("Get MetaMask!");
+					return;
+				}
+				const accounts = await ethereum.request({
+						method: "eth_requestAccounts",
+				});
+				console.log("Connected", accounts[0]);
+				this.currentAccount = accounts[0];
+				} 
+				catch (error) {
+					console.log(error);
+				}
+			},
 		},
 		created() {
 
