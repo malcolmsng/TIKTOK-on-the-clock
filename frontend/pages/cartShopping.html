@@ -131,13 +131,13 @@
                                     <div class="ml-7 relative">
                                         <h5 class="text-md font-semibold tracking-tight">TT Pay</h5>
 
-                                        <p v-if="balance < 1.95" class="font-normal text-red-500 text-sm">balance:
-                                            S${{balance.toFixed(2)}}</p>
+                                        <p v-if="userBalance < 1.95" class="font-normal text-red-500 text-sm">balance:
+                                            S${{userBalance.toFixed(2)}}</p>
                                         <p v-else class="font-normal text-gray-700 text-sm">balance:
-                                            S${{balance.toFixed(2)}}</p>
+                                            S${{userBalance.toFixed(2)}}</p>
                                     </div>
 
-                                    <span v-if="balance < 1.95" @click="goToSinglePage()"
+                                    <span v-if="userBalance < 1.95" @click="goToSinglePage()"
                                         class="absolute right-10 inline-flex items-center justify-center px-2 py-0.5 text-xs font-medium text-red-500 bg-red-200 rounded">Top-up</span>
 
                                 </a>
