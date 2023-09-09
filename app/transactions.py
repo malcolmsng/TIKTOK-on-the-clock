@@ -142,7 +142,7 @@ def create_cart_checkout_session():
             ],
             mode='payment',
             success_url='http://127.0.0.1/TIKTOK-on-the-clock/frontend/pages/cartShopping.html',
-            cancel_url='http://127.0.0.1/TIKTOK-on-the-clock/frontend/pages/cartShopping.html',
+            cancel_url='http://127.0.0.1/TIKTOK-on-the-clock/frontend/pages/carttopuppage.html',
         )
     except Exception as e:
         return str(e)
