@@ -10,7 +10,7 @@ import "hardhat/console.sol";
 /**
  * A smart contract that allows changing a state variable of the contract and tracking the changes
  * It also allows the owner to withdraw the Ether in the contract
- * @author BuidlGuidl
+ * @appor BuidlGuidl
  */
 contract YourContract {
 	// State Variables

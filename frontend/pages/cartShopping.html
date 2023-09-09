@@ -73,7 +73,7 @@
 
         <!-- place order button-->
         <div class="flex justify-center items-center mx-4 mt-2 mb-20">
-            <button type="button" style="background-color: #EE1D52;" data-modal-target="bottom-right-modal"
+            <button type="button" style="background-color: #EE1D52;" data-modal-target="bottom-right-modal" @click = "submitPayment"
                 data-modal-toggle="bottom-right-modal"
                 class="w-full bottom-20 text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-medium rounded-[2px] text-sm px-5 py-2.5 mr-2 mb-2">Place
                 Order</button>
@@ -286,7 +286,7 @@
                     .then(response => {
                         console.log(response);
                         if (response["status"] === 200) {
-                            window.location.assign("./homepage.html");
+                            // window.location.assign("./homepage.html");
                         } else {
                             console.log(response["data"].status)
                             console.log("error processing payment")

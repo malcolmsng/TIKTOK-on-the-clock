@@ -89,7 +89,7 @@ def login():
         return "Invalid user credentials", 401
 
 # Function and Route for getting All Users in the DB
-@auth.route("/user")
+@app.route("/user")
 def getAllUser():
     userList = User.query.all()
     
@@ -102,7 +102,7 @@ def getAllUsenames():
     return jsonify([user.json()["Username"] for user in userList]), 200
 
 # Function and Route for getting a User by ID
-@auth.route("/user/<int:id>")
+@app.route("/user/<int:id>")
 def getUserByID(id: int):
     userList = User.query.filter_by(User_ID=id).all()
     if len(userList):
@@ -112,7 +112,7 @@ def getUserByID(id: int):
     return "There are no such user with ID: " + str(id), 406
 
 # Function and Route to update a User's Balance
-@auth.route("/updateBalance", methods=['PUT'])
+@app.route("/updateBalance", methods=['PUT'])
 def updateBalance():
     """
     Sample Request
@@ -181,7 +181,7 @@ def createTransaction():
         db.session.rollback()
         return "An error occurred while creating the transaction. " + str(e), 406
 
-#  Get the transactions of a user using their User_ID
+# Get the transactions of a user using their User_ID
 @app.route("/viewTransaction/<int:id>", methods=['GET'])
 def viewTransaction(id: int):
 
