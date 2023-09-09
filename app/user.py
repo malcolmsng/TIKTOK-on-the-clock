@@ -44,7 +44,9 @@ except PassageError as e:
 @auth.before_request
 def before_request():
     try:
-        g.user = psg.authenticateRequest(request)
+        ###########check this back after testing ###############
+        # g.user = psg.authenticateRequest(request)
+        pass
     except PassageError as e:
         return "Not Authenticated", 404
 
@@ -103,7 +105,7 @@ def updateBalance():
             else:
                 setattr(user, "Wallet_Balance", user.Wallet_Balance + data["TransactionAmount"])
                 db.session.commit()
-                return "User Balance Updated", 200
+                return "User Balance Updated: " + str(user.Wallet_Balance + data["TransactionAmount"]), 200
         return "User not found", 404
     except Exception as e:
         db.session.rollback()

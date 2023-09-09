@@ -47,7 +47,7 @@ def before_request():
         return "Not Authenticated", 404
 
 # Route to create a new transaction
-@auth.route("/transaction", methods=['POST'])
+@app.route("/transaction", methods=['POST'])
 def createTransaction():
     """
     Sample Request
@@ -91,16 +91,10 @@ def createTransaction():
         return "An error occurred while creating the transaction. " + str(e), 406
 
 # Get the transactions of a user using their User_ID
-@auth.route("/viewTransaction", methods=['GET'])
-def viewTransaction():
-    """
-    Sample Request
-    {
-        "User_ID": 1
-    }
-    """
-    data = request.get_json()
-    user_ID = data["User_ID"]
+@app.route("/viewTransaction/<int:id>", methods=['GET'])
+def viewTransaction(id: int):
+
+    user_ID = id
     try:
         transactions = Transaction.query.filter(
             or_(Transaction.Sender_ID == user_ID, Transaction.Recepient_ID == user_ID)).all()
@@ -129,6 +123,26 @@ def create_checkout_session():
             mode='payment',
             success_url='http://localhost/TIKTOK-on-the-clock/frontend/pages/homepage.html',
             cancel_url='http://localhost/TIKTOK-on-the-clock/frontend/pages/topuppage.html',
+        )
+    except Exception as e:
+        return str(e)
+
+    return redirect(checkout_session.url, code=303)
+
+@app.route('/create-checkout-session/cart', methods=['POST'])
+def create_cart_checkout_session():
+    try:
+        checkout_session = stripe.checkout.Session.create(
+            line_items=[
+                {
+                    # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+                    'price': CUSTOMPRICEKEY,
+                    'quantity': 1,
+                },
+            ],
+            mode='payment',
+            success_url='http://127.0.0.1/TIKTOK-on-the-clock/frontend/pages/cartShopping.html',
+            cancel_url='http://127.0.0.1/TIKTOK-on-the-clock/frontend/pages/carttopuppage.html',
         )
     except Exception as e:
         return str(e)
@@ -207,7 +221,11 @@ def webhook():
     # to do for aloysius
     # fetch the price from the event json object (which comes in cents so divide by 100)
     # update the user DB on the amount of value topped up
-    amount = event["data"]["object"]["amount_total"]/100
+    if("amount_total" not in event["data"]["object"]):
+        amount = event["data"]["object"]["amount"]/100
+    else:
+        amount = event["data"]["object"]["amount_total"]/100
+    
     email = event["data"]["object"]["customer_details"]["email"]
 
     try:

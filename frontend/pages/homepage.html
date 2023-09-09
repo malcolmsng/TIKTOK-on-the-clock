@@ -12,7 +12,7 @@
 			/* font-family: proxima-nova, sans-serif;
             font-style: normal;
             font-weight: 100; */
-		}
+			}
 
 		#spectrum-background {
 			background: linear-gradient(to top left, rgb(24, 247, 255), transparent),
@@ -400,41 +400,37 @@
 	const vm = new Vue({
 		el: "#main-container",
 
-		data: {
-			url: "http://localhost:4242/",
-			userBalance: 0,
-			isLoading: window.isLoading,
-			isAuthorized: window.isAuthorized,
-			username: window.username,
-		},
+			data: {
+				url: "http://localhost:4242/",
+				backendURL:"http://127.0.0.1:4242/",
+				userBalance: 0,
+				isLoading: window.isLoading,
+				isAuthorized: window.isAuthorized,
+				username: window.username,
+			},
 
-		mounted: async function () {
-			axios
-				.get(this.url + "viewTransaction", {
-					data: {
-						User_ID: 4,
-					},
-				})
-				.then(response => {
-					console.log(response);
-				})
-				.catch(error => {
-					console.log(error.message);
-				});
+			mounted: async function () {
+				axios
+					.get(this.backendURL + "viewTransaction/4")
+					.then(response => {
+						console.log(response);
+					})
+					.catch(error => {
+						console.log(error.message);
+					});
 
-			axios
-				.get(this.url + "/user/4")
-				.then(response => {
-					this.userBalance = response["data"][0]["Wallet_Balance"];
-					console.log(userBalance);
-				})
-				.catch(error => {
-					console.log(error.message);
-				});
-		},
-		methods: {},
-		created() {},
-	});
-</script>
-
+				axios
+					.get(this.backendURL + "/user/4")
+					.then(response => {
+						this.userBalance = response["data"][0]["Wallet_Balance"];
+						console.log(userBalance);
+					})
+					.catch(error => {
+						console.log(error.message);
+					});
+			},
+			methods: {},
+			created() {},
+		});
+	</script>
 </html>
