@@ -74,6 +74,11 @@ def getAllUser():
     
     return jsonify([user.json() for user in userList]), 200
     
+@app.route("/usernames")
+def getAllUsenames():
+    userList = User.query.all()
+    
+    return jsonify([user.json()["Username"] for user in userList]), 200
 
 # Function and Route for getting a User by ID
 @auth.route("/user/<int:id>")
