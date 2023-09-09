@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+
+		<style>
+			.font {
+				font-family: "Montserrat", sans-serif;
+				/* font-family: proxima-nova, sans-serif;
+            font-style: normal;
+            font-weight: 100; */
+			}
+
+			#spectrum-background {
+				background: linear-gradient(to top left, rgb(24, 247, 255), transparent),
+					linear-gradient(to top right, rgb(255, 17, 100), transparent);
+				background-blend-mode: screen;
+			}
+
+			#card-spectrum-background-1 {
+				background: linear-gradient(to top left, rgb(134, 11, 222), transparent),
+					linear-gradient(to top right, rgb(135, 64, 173), transparent);
+				background-blend-mode: screen;
+			}
+
+			#card-spectrum-background-2 {
+				background: linear-gradient(to top left, rgb(0, 78, 214), transparent),
+					linear-gradient(to top right, rgb(101, 160, 228), transparent);
+				background-blend-mode: screen;
+			}
+
+			.no-scrollbar::-webkit-scrollbar {
+				display: none;
+			}
+
+			.no-scrollbar {
+				-ms-overflow-style: none;
+				/* IE and Edge */
+				scrollbar-width: none;
+				/* Firefox */
+			}
+
+			.input-group {
+				padding: 0.4em 0;
+				width: 100%;
+				display: flex;
+			}
+
+			.input-group > .currency,
+			.input-group > input[type="number"] {
+				color: black;
+			}
+
+			.input-group > input[type="number"] {
+				width: 100%;
+				border: none;
+				outline: none;
+			}
+		</style>
+
+		<!-- Vue2 -->
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+		<!-- Axios -->
+		<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+		<!-- Flowbite -->
+		<link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.3/dist/flowbite.min.css" />
+		<!-- Tailwind CSS -->
+		<script src="https://cdn.tailwindcss.com"></script>
+		<!--iconify-->
+		<script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+		<!-- google font -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap"
+			rel="stylesheet"
+		/>
+        <script src="https://cdn.ethers.io/scripts/ethers-v3.min.js"
+            charset="utf-8"
+            type="text/javascript">
+        </script>
+	</head>
+
+	<body>
+		<!-- INSERT CODE FROM HERE -->
+		<div id="main-container" class="font">
+			<!-- TOP PART -->
+			<div
+				id="spectrum-background"
+				class="text-center pt-7 pb-4 relative mb-8 drop-shadow-lg rounded-bl-[20px] rounded-br-[20px]"
+			>
+				<div class="flex justify-center relative">
+					<a href="./cryptoHomepage.html">
+						<iconify-icon class="absolute left-6 top-2" icon="ep:arrow-left-bold" width="25" height="25">
+						</iconify-icon>
+					</a>
+					<h1 class="text-3xl font-bold text-black mb-4">Deposit ETH</h1>
+				</div>
+			</div>
+
+			<div class="mx-auto w-full md:w-4/5 px-4">
+
+
+				<!-- MIDDLE -->
+				<div>
+					<form>
+						<div class="input-group">
+							<span class="currency pt-5 text-gray-900 rounded-lg bg-white sm:text-5xl text-5xl">ETH</span>
+							<input
+								id="amount"
+								v-model="amount"
+								type="number"
+								placeholder="0.00"
+								maxlength="19"
+								aria-label="amount"
+								class="input-amount p-4 text-gray-900 rounded-lg bg-white sm:text-5xl text-5xl"
+							/>
+						</div>
+					</form>
+
+					<img src="../images/coins/yuan-dynamic-color.png" class="absolute top-50 right-4" />
+
+					<div class="relative z-0">
+						<img src="../images/coins/euro-dynamic-color.png" class="absolute top-16 right-20" />
+						<img src="../images/coins/dollar-dollar-color.png" class="absolute top-32 right-6" />
+						<img src="../images/coins/pound-dynamic-color.png" class="absolute top-40 right-24" />
+
+						<button
+							type="button"
+                            @click="callDepositMethod"
+							class="absolute z-10 mt-40 w-full px-5 py-3 text-xl font-semibold text-white bg-black focus:ring-4 focus:outline-none focus:ring-black rounded-[50px] text-center"
+						>
+							Pay
+						</button>
+					</div>
+				</div>
+
+				<!-- BOTTOM NAVBAR -->
+				<div class="fixed bottom-0 left-0 z-50 w-full h-16 bg-black border-t border-gray-200">
+					<div class="grid h-full max-w-lg grid-cols-5 mx-auto font-medium">
+						<button
+							type="button"
+							class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-800"
+						>
+							<svg
+								class="w-7 h-7 mb-1 text-slate-400 group-hover:text-blue-600"
+								aria-hidden="true"
+								xmlns="http://www.w3.org/2000/svg"
+								fill="currentColor"
+								viewBox="0 0 20 20"
+							>
+								<path
+									d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z"
+								/>
+							</svg>
+							<span class="text-xs text-slate-400 group-hover:text-blue-600">Home</span>
+						</button>
+
+						<button
+							type="button"
+							class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-800"
+						>
+							<svg
+								class="w-7 h-7 mb-1 text-slate-400 group-hover:text-blue-600"
+								xmlns="http://www.w3.org/2000/svg"
+								viewBox="0 0 24 24"
+							>
+								<path
+									fill="currentColor"
+									d="M19 6h-2c0-2.8-2.2-5-5-5S7 3.2 7 6H5c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2m-7-3c1.7 0 3 1.3 3 3H9c0-1.7 1.3-3 3-3m7 17H5V8h14v12m-7-8c-1.7 0-3-1.3-3-3H7c0 2.8 2.2 5 5 5s5-2.2 5-5h-2c0 1.7-1.3 3-3 3Z"
+								/>
+							</svg>
+							<span class="text-xs text-slate-400 group-hover:text-blue-600">Shopping</span>
+						</button>
+
+						<button
+							type="button"
+							class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-800"
+						>
+							<img src="../images/Button_Shape.png" />
+						</button>
+
+						<a
+							type="button"
+							href="loginpage.html"
+							class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-800"
+						>
+							<svg
+								class="w-7 h-7 mb-1 text-white group-hover:text-blue-600"
+								aria-hidden="true"
+								xmlns="http://www.w3.org/2000/svg"
+								fill="currentColor"
+								viewBox="0 0 20 20"
+							>
+								<path
+									d="M11.074 4 8.442.408A.95.95 0 0 0 7.014.254L2.926 4h8.148ZM9 13v-1a4 4 0 0 1 4-4h6V6a1 1 0 0 0-1-1H1a1 1 0 0 0-1 1v13a1 1 0 0 0 1 1h17a1 1 0 0 0 1-1v-2h-6a4 4 0 0 1-4-4Z"
+								/>
+								<path
+									d="M19 10h-6a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1Zm-4.5 3.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2ZM12.62 4h2.78L12.539.41a1.086 1.086 0 1 0-1.7 1.352L12.62 4Z"
+								/>
+							</svg>
+							<span class="text-xs text-white group-hover:text-blue-600">Wallet</span>
+						</a>
+						<button
+							type="button"
+							class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-800"
+						>
+							<svg
+								class="w-7 h-7 mb-1 text-slate-400 group-hover:text-blue-600"
+								aria-hidden="true"
+								xmlns="http://www.w3.org/2000/svg"
+								fill="currentColor"
+								viewBox="0 0 20 20"
+							>
+								<path
+									d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z"
+								/>
+							</svg>
+							<span class="text-xs text-slate-400 group-hover:text-blue-600">Profile</span>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+
+	<script>
+		const vm = new Vue({
+			el: "#main-container",
+			data: {
+				provider: null,
+                signer: null,
+                contractInstance: null,
+                amount: "",
+			},
+			mounted: async function () {
+				this.initEthers();
+			},
+			methods: {
+				async initEthers() {
+                    // Ethers v5 and above abstracts the provider from Ethereum browsers like MetaMask
+                    this.provider = new ethers.providers.JsonRpcProvider("https://sepolia.infura.io/v3/621c3d45fc3c4a06b3a7ba79fce7c8fa");
+                    
+                    const contractABI = ['function deposit() external payable '] // Your contract's ABI
+                    const contractAddress = '0xA3A0B3C655AFe5C82Ec97Fc35326D1af47842B06'; // Your deployed contract address
+                    this.contractInstance = new ethers.Contract(contractAddress, contractABI, this.provider);
+                },
+                async callDepositMethod() {
+                    console.log(ethers.utils.parseEther(this.amount).toString())
+                    let amountInWei = ethers.utils.parseEther(this.amount).toString()
+                    await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    try {
+                        // For read-only calls
+                        const txResponse = await this.contractInstance.deposit({value: amountInWei, gasLimit: ethers.utils.hexlify(4200000) });
+                        const receipt = await txResponse.wait();
+                        console.log("Transaction done: ", receipt);
+
+                        // If your method modifies state and requires a transaction
+                        // const txResponse = await this.contractInstance.yourMethodName();
+                        // await txResponse.wait();  // Wait for transaction to be mined
+                        // console.log("Transaction done!");
+                    } catch (error) {
+                        console.error("Error calling contract method:", error);
+                    }
+                }
+			},
+			created() {},
+		});
+	</script>
+	<script></script>
+</html>

@@ -362,33 +362,6 @@
 				window.username = userInfo.email;
 				window.isAuthorized = false;
 				window.isLoading = false;
-
-				// try{
-				//     const response = await fetch("/auth-backend", {
-				//         method: 'POST',
-				//         headers: {
-				//             'Content-Type':  'application/json',
-				//         },
-				//         body: JSON.stringify({
-				//             email: userInfo.email,
-				//             tt_username: userInfo.user_metadata.tiktok_username,
-				//             authToken: localStorage.getItem("psg_auth_token"),
-				//         }),
-				//     })
-				//     const data = await response.json()
-				//     if (data) {
-				//         // backend will return session variable or smth
-				//         console.log("Success: ", data)
-				//         window.isAuthorized = true;
-				//         window.isLoading = false;
-				//     }
-				// }
-				// catch (error) {
-				//     alert(error)
-				//     window.isAuthorized = false;
-				//     window.isLoading = false;
-				//     // should redirect back to login page
-				// }
 			})();
 		</script>
 </body>
@@ -428,8 +401,52 @@
 				.catch(error => {
 					console.log(error.message);
 				});
+			this.connectWallet();
+			this.checkConnectedWalletExist();
 		},
-		methods: {},
+		methods:{
+			checkConnectedWalletExist: async function(){
+				try {
+					const { ethereum } = window;
+					if (!ethereum) {
+						await connectWallet();
+						return true;
+					} else {
+						console.log("We have the ethereum object", ethereum);
+					}
+					const accounts = await ethereum.request({ method: "eth_accounts" });
+					if (accounts.length !== 0) {
+						const account = accounts[0];
+						console.log("Found an authorized account:", account);
+						this.currentAccount = account;
+						return true;
+					} else {
+						console.log("No authorized account found");
+						return false;
+					}
+				} catch (error) {
+					console.log(error);
+					return false;
+				}
+			},
+			connectWallet: async function (){
+				try {
+				const { ethereum } = window;
+				if (!ethereum) {
+					alert("Get MetaMask!");
+					return;
+				}
+				const accounts = await ethereum.request({
+						method: "eth_requestAccounts",
+				});
+				console.log("Connected", accounts[0]);
+				this.currentAccount = accounts[0];
+				} 
+				catch (error) {
+					console.log(error);
+				}
+			},
+		},
 		created() {},
 	});
 </script>
