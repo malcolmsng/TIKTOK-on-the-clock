@@ -2,7 +2,7 @@ from app import app, db
 from flask import jsonify, request, url_for, render_template
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
-from app.user import User
+from app.main import User
 
 # Function and Route to Register a new User
 @app.route("/register", methods=['POST'])
