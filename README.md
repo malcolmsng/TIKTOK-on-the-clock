@@ -9,7 +9,7 @@ TIK TOK hackathon
 pip install -r requirements.txt
 ```
 
-### Import the database using the "bytedanceHackathon.sql" file
+### Import the database using the "tiktok.sql" file
 
 ### Copy and paste .env.template file, and rename it into .env file and save it in the root directory
 
