@@ -1,5 +1,7 @@
-CREATE DATABASE  IF NOT EXISTS `tiktok` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `tiktok`;
+DROP DATABASE IF EXISTS tiktok;
+CREATE DATABASE tiktok;
+USE tiktok;
+
 -- MySQL dump 10.13  Distrib 8.0.22, for Win64 (x86_64)
 --
 -- Host: localhost    Database: tiktok
@@ -16,41 +18,6 @@ USE `tiktok`;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
---
--- Table structure for table `transactions`
---
-
-DROP TABLE IF EXISTS `transactions`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `transactions` (
-  `transaction_ID` int NOT NULL AUTO_INCREMENT,
-  `Sender_ID` int NOT NULL,
-  `Recepient_ID` int NOT NULL,
-  `Transaction_Type` varchar(45) NOT NULL,
-  `Amount` float NOT NULL,
-  PRIMARY KEY (`transaction_ID`),
-  KEY `sender_fk_idx` (`Sender_ID`),
-  KEY `user_fk2_idx` (`Recepient_ID`),
-  CONSTRAINT `user_fk` FOREIGN KEY (`Sender_ID`) REFERENCES `user` (`user_ID`),
-  CONSTRAINT `user_fk2` FOREIGN KEY (`Recepient_ID`) REFERENCES `user` (`user_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `transactions`
---
-
-LOCK TABLES `transactions` WRITE;
-/*!40000 ALTER TABLE `transactions` DISABLE KEYS */;
-INSERT INTO `transactions` VALUES (1,5,4,'Transfer',999),(2,4,5,'Transfer',999);
-/*!40000 ALTER TABLE `transactions` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `user`
---
 
 DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -86,3 +53,39 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2023-09-08 22:10:30
+
+
+--
+-- Table structure for table `transactions`
+--
+
+DROP TABLE IF EXISTS `transactions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `transactions` (
+  `transaction_ID` int NOT NULL AUTO_INCREMENT,
+  `Sender_ID` int NOT NULL,
+  `Recepient_ID` int NOT NULL,
+  `Transaction_Type` varchar(45) NOT NULL,
+  `Amount` float NOT NULL,
+  PRIMARY KEY (`transaction_ID`),
+  KEY `sender_fk_idx` (`Sender_ID`),
+  KEY `user_fk2_idx` (`Recepient_ID`),
+  CONSTRAINT `user_fk` FOREIGN KEY (`Sender_ID`) REFERENCES `user` (`user_ID`),
+  CONSTRAINT `user_fk2` FOREIGN KEY (`Recepient_ID`) REFERENCES `user` (`user_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `transactions`
+--
+
+LOCK TABLES `transactions` WRITE;
+/*!40000 ALTER TABLE `transactions` DISABLE KEYS */;
+INSERT INTO `transactions` VALUES (1,5,4,'Transfer',999),(2,4,5,'Transfer',999);
+/*!40000 ALTER TABLE `transactions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user`
+--

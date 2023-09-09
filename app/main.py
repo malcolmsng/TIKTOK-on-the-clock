@@ -181,8 +181,8 @@ def createTransaction():
         db.session.rollback()
         return "An error occurred while creating the transaction. " + str(e), 406
 
-# Get the transactions of a user using their User_ID
-@auth.route("/viewTransaction/<int:id>", methods=['GET'])
+#  Get the transactions of a user using their User_ID
+@app.route("/viewTransaction/<int:id>", methods=['GET'])
 def viewTransaction(id: int):
 
     user_ID = id
