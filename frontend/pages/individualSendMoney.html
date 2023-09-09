@@ -158,7 +158,7 @@
 							@click="sendTransaction"
 							class="absolute z-10 mt-40 w-full px-5 py-3 text-xl font-semibold text-white bg-black focus:ring-4 focus:outline-none focus:ring-black rounded-[50px] text-center"
 						>
-							Pay S${{amount == ""? "0": amount}}
+							Pay S${{amount == ""? "0": parseFloat(amount).toFixed(2)}}
 						</button>
 					</div>
 				</div>
@@ -294,12 +294,12 @@
 					console.log(this.amount);
 				},
 				async sendTransaction() {
-					let intAmount = parseInt(this.amount);
-					if (intAmount > this.userBalance) {
+					let floatAmount = parseFloat(this.amount);
+					if (floatAmount > this.userBalance) {
 						console.log("You are trying to transfer more than you have.");
 						return;
 					}
-						else if(intAmount <= 0 || isNaN(intAmount)){
+						else if(floatAmount <= 0 || isNaN(floatAmount)){
 						console.log("Invalid Transfer Amount");
 						return;
 					} else {
@@ -308,7 +308,7 @@
 								Sender_ID: "4",
 								Recepient_ID: "5",
 								Transaction_Type: "Transfer",
-								TransactionAmount: intAmount,
+								TransactionAmount: floatAmount,
 							})
 							.then(response => {
 		                              console.log(response)
