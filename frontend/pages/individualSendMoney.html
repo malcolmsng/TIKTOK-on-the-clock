@@ -174,7 +174,7 @@
 						Pay S${{amount == ""? "0": parseFloat(amount).toFixed(2)}}
 					</button>
 					<button v-else type="button" @click="sendTransaction" data-modal-target="bottom-right-modal"
-						data-modal-toggle="bottom-right-modal"
+						data-modal-toggle="bottom-right-modal" 
 						class="absolute z-10 mt-40 w-full px-5 py-3 text-xl font-semibold text-white bg-black focus:ring-4 focus:outline-none focus:ring-black rounded-[50px] text-center">
 						Pay S${{amount == ""? "0": parseFloat(amount).toFixed(2)}}
 					</button>
@@ -191,7 +191,7 @@
 					<div class="relative bg-white rounded-lg shadow ">
 						<!-- Modal header -->
 						<div class="flex items-center justify-between p-5  rounded-t">
-							<button type="button"
+							<button type="button" @click=gotToSinglepage("./homepage.html")
 								class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center"
 								data-modal-hide="bottom-right-modal">
 								<svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -216,7 +216,7 @@
 								</p>
 							</div>
 
-							<button type="button" style="background-color: #EE1D52;"
+							<button type="button" style="background-color: #EE1D52;" @click=gotToSinglepage("./homepage.html")
 								data-modal-hide="bottom-right-modal"
 								class="w-full bottom-20 text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-medium rounded-[2px] text-sm px-5 py-2.5 mr-2 mb-2">Close</button>
 						</div>
@@ -260,7 +260,7 @@
 									You have insufficient balance!
 								</p>
 							</div>
-							<button type="button" style="background-color: #EE1D52;"
+							<button type="button" style="background-color: #EE1D52;" 
 								data-modal-hide="bottom-right-modal"
 								class="w-full bottom-20 text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-medium rounded-[2px] text-sm px-5 py-2.5 mr-2 mb-2">Close</button>
 						</div>
@@ -370,6 +370,9 @@
 				});
 		},
 		methods: {
+			gotToSinglepage(location){
+				window.location.assign(location)
+			},
 			getTransaction() {
 				console.log(this.amount);
 			},
@@ -392,7 +395,7 @@
 						.then(response => {
 							console.log(response)
 							if (response["data"] === 'Transaction Complete') {
-								window.location.href = "homepage.html"
+								// window.location.href = "homepage.html"
 							}
 						})
 						.catch(error => {
