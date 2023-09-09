@@ -38,19 +38,20 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet" />
 
-		<!-- buy now pay later script  -->
-		<script src="https://js.stripe.com/v3/"></script>
-	</head>
-	<body>
-		<div id="main-container overflow-y-scroll" class="font">
-			<div id="spectrum-background" class="text-center pt-6 pb-12 relative mb-16 bg-green-500">
-				<div class="flex justify-center relative">
-					<a href="../pages/homepage.html">
-						<iconify-icon class="absolute left-6 top-2" icon="ep:arrow-left-bold" width="25" height="25">
-						</iconify-icon>
-					</a>
-					<h1 class="text-4xl font-bold text-black mb-4">Top Up</h1>
-				</div>
+	<!-- buy now pay later script  -->
+	<script src="https://js.stripe.com/v3/"></script>
+</head>
+
+<body>
+	<div id="main-container overflow-y-scroll" class="font">
+		<div id="spectrum-background" class="text-center pt-6 pb-8 relative mb-4 bg-green-500">
+			<div class="flex justify-center relative">
+				<a href="../pages/homepage.html">
+					<iconify-icon class="absolute left-6 top-2" icon="ep:arrow-left-bold" width="25" height="25">
+					</iconify-icon>
+				</a>
+				<h1 class="text-4xl font-bold text-black mb-8">Top Up</h1>
+			</div>
 
 			<div class="relative flex items-center p-4 bg-white rounded-[20px] drop-shadow-lg mx-4" href="#">
 				<div class="ml-1 font-bold space-x-8 flex items-center">
@@ -71,11 +72,13 @@
 						<span class="sr-only">Close modal</span>
 					</button>
 					<h5 class="text-left text-lg font-bold tracking-tight text-gray-900">Turn on auto top-up!</h5>
-					<p class="text-left font-normal text-sm text-gray-700 ">When your balance drops below a set amount,
+					<p class="text-left font-normal text-sm text-gray-700 mr-2">When your balance drops below a set
+						amount,
 						we'll top it up automatically</p>
 				</div>
 			</div>
 		</div>
+
 
 
 		<!-- TOP UP METHODS -->
@@ -181,7 +184,8 @@
 					<span class="text-xs text-slate-400 group-hover:text-blue-600">Home</span>
 				</button>
 
-				<button type="button" class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-800" @click ="goToShoppingPage()">
+				<button type="button" class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-800"
+					@click="goToShoppingPage()">
 					<svg class="w-7 h-7 mb-1 text-slate-400 group-hover:text-blue-600"
 						xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 						<path fill="currentColor"
@@ -222,16 +226,16 @@
 	const vm = new Vue({
 		el: '#main-container',
 		data: {
-			
+
 
 		},
 		mounted: async function () {
 
 		},
 		methods: {
-			goToShoppingPage: function(){
-                window.location.assign("./mainShopping.html")
-            }
+			goToShoppingPage: function () {
+				window.location.assign("./mainShopping.html")
+			}
 		},
 		created() {
 
