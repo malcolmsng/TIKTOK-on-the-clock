@@ -82,7 +82,6 @@
 </head>
 
 <body>
-	<!-- INSERT CODE FROM HERE -->
 	<div id="main-container" class="font">
 		<!-- TOP PART -->
 		<div id="spectrum-background"
@@ -118,6 +117,35 @@
 
 			<!-- MIDDLE -->
 			<div>
+				<button id="dropdownDefaultButton" data-dropdown-toggle="dropdown"
+					class="text-black focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2.5 text-center inline-flex items-center"
+					type="button">Wallet option
+					<svg class="w-2.5 h-2.5 ml-2.5" aria-hidden="true"
+						xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+						<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+							d="m1 1 4 4 4-4" />
+					</svg>
+				</button>
+				<!--dropdown options -->
+				<div id="dropdown"
+					class="ml-2 z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow drop-shadow-lg w-44">
+					<ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownDefaultButton">
+						<li>
+							<a href="#"
+								class="flex block px-4 py-2 hover:bg-gray-100 font-semibold text-lg">
+								<img src ="../images/Tik Tok Logo.png" class = "ml-3 h-8 mr-4">
+							TTtoken</a>
+						</li>
+						<li>
+							<a href="#"
+								class="flex block px-4 py-2 hover:bg-gray-100 font-semibold text-lg">
+								<img src ="../images/Tik Tok Logo.png" class = "ml-3 mr-4 h-8">
+							TTpay</a>
+						</li>
+					</ul>
+				</div>
+
+
 				<form>
 					<div class="input-group">
 						<span class="currency pt-5 text-gray-900 rounded-lg bg-white sm:text-5xl text-5xl">S$</span>
@@ -140,17 +168,16 @@
 					<img src="../images/coins/dollar-dollar-color.png" class="absolute top-32 right-6" />
 					<img src="../images/coins/pound-dynamic-color.png" class="absolute top-40 right-24" />
 
-					<button v-if ="this.amount == 0" type="button" @click="sendTransaction" data-modal-target="bottom-right-modal" disabled
-						data-modal-toggle="bottom-right-modal"
+					<button v-if="this.amount == 0" type="button" @click="sendTransaction"
+						data-modal-target="bottom-right-modal" disabled data-modal-toggle="bottom-right-modal"
 						class="absolute z-10 mt-40 w-full px-5 py-3 text-xl font-semibold text-white bg-zinc-700 focus:ring-4 focus:outline-none focus:ring-black rounded-[50px] text-center">
 						Pay S${{amount == ""? "0": parseFloat(amount).toFixed(2)}}
 					</button>
-					<button v-else type="button" @click="sendTransaction" data-modal-target="bottom-right-modal" 
+					<button v-else type="button" @click="sendTransaction" data-modal-target="bottom-right-modal"
 						data-modal-toggle="bottom-right-modal"
 						class="absolute z-10 mt-40 w-full px-5 py-3 text-xl font-semibold text-white bg-black focus:ring-4 focus:outline-none focus:ring-black rounded-[50px] text-center">
 						Pay S${{amount == ""? "0": parseFloat(amount).toFixed(2)}}
 					</button>
-
 				</div>
 			</div>
 
@@ -225,7 +252,8 @@
 							<div class="wrapper">
 								<svg class="checkmark error" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
 									<circle class="checkmark_circle_error" cx="26" cy="26" r="25" fill="none" />
-									<path class="checkmark_check" stroke-linecap="round" fill="none" d="M16 16 36 36 M36 16 16 36" /></svg>
+									<path class="checkmark_check" stroke-linecap="round" fill="none"
+										d="M16 16 36 36 M36 16 16 36" /></svg>
 							</div>
 							<div class="flex justify-center items-center">
 								<p class="text-xl font-bold leading-relaxed text-black">
