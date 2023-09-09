@@ -69,19 +69,19 @@
 		<!-- BALANCE -->
 		<div id="spectrum-background" class="text-center pt-6 pb-12 relative mb-16">
 
-            <h4 class="text-2xl font-normal text-black mb-2">Your TikTok Token Balance</h4>
+			<h4 class="text-2xl font-normal text-black mb-2">Your TikTok Token Balance</h4>
 			<h1 class="text-4xl font-bold text-black mb-4">TTT 3.5</h1>
 
-			
+
 			<div class="flex justify-center items-center">
 				<a class="absolute left-6 z-10 inline-flex items-center text-base font-semibold text-gray-900"
 					href="homepage.html">
 					<iconify-icon icon="ep:arrow-left-bold" width="25" height="25"></iconify-icon>
 				</a>
 
-				<img style="height: 160px" src="../images/Vector.png" class="absolute z-10 top-16 right-10"/>
-				<img src = "../images/ttcoin.png" class = "absolute z-20 relative mb-4" style = "width: 180px; height: 150px">
-				
+				<img style="height: 160px" src="../images/Vector.png" class="absolute z-10 top-16 right-10" />
+				<img src="../images/ttcoin.png" class="absolute z-20 relative mb-4" style="width: 180px; height: 150px">
+
 				<a class="absolute right-6 z-10 inline-flex items-center text-base font-semibold text-gray-900"
 					href="homepage.html">
 					<iconify-icon icon="ep:arrow-right-bold" width="25" height="25"></iconify-icon>
@@ -250,37 +250,13 @@
 				</div>
 
 				<div class="grid gap-2 mb-6 md:grid-cols-2 xl:grid-cols-4">
-					<a class="relative flex items-center p-4 bg-white rounded-[20px] drop-shadow-lg" href="#">
+					<a v-for = "transaction in transactions" class="relative flex items-center p-4 bg-white rounded-[20px] drop-shadow-lg" href="#">
 						<div class="ml-4 p-1 mr-4 text-blue-500 bg-slate-200 rounded-full">
 							<img src="../images/bag-dynamic-color.png" />
 						</div>
 						<div class="ml-3">
 							<h5 class="text-lg font-bold tracking-tight text-gray-900">Payment</h5>
-							<p class="font-normal text-gray-700">To TikTok Shop 12345</p>
-						</div>
-						<div class="absolute right-6 text-base font-semibold text-gray-90">
-							<iconify-icon icon="ep:arrow-right-bold" width="25" height="25"></iconify-icon>
-						</div>
-					</a>
-					<a class="relative flex items-center p-4 bg-white rounded-[20px] drop-shadow-lg" href="#">
-						<div class="ml-4 p-1 mr-4 text-blue-500 bg-slate-200 rounded-full">
-							<img src="../images/bag-dynamic-color.png" />
-						</div>
-						<div class="ml-3">
-							<h5 class="text-lg font-bold tracking-tight text-gray-900">Payment</h5>
-							<p class="font-normal text-gray-700">To TikTok Shop 14572</p>
-						</div>
-						<div class="absolute right-6 text-base font-semibold text-gray-90">
-							<iconify-icon icon="ep:arrow-right-bold" width="25" height="25"></iconify-icon>
-						</div>
-					</a>
-					<a class="relative flex items-center p-4 bg-white rounded-[20px] drop-shadow-lg" href="#">
-						<div class="ml-4 p-1 mr-4 text-blue-500 bg-slate-200 rounded-full">
-							<img src="../images/bag-dynamic-color.png" />
-						</div>
-						<div class="ml-3">
-							<h5 class="text-lg font-bold tracking-tight text-gray-900">Payment</h5>
-							<p class="font-normal text-gray-700">To TikTok Shop 22561</p>
+							<p class="font-normal text-gray-700">To TikTok shop {{transaction.Recepient_ID}}</p>
 						</div>
 						<div class="absolute right-6 text-base font-semibold text-gray-90">
 							<iconify-icon icon="ep:arrow-right-bold" width="25" height="25"></iconify-icon>
@@ -376,24 +352,22 @@
 			isLoading: window.isLoading,
 			isAuthorized: window.isAuthorized,
 			username: window.username,
+			transactions: []
 		},
 
 		mounted: async function () {
 			axios
-				.get(this.url + "viewTransaction", {
-					data: {
-						User_ID: 4,
-					},
-				})
+				.get(this.url + "viewTransaction/4")
 				.then(response => {
-					console.log(response);
+					this.transactions = response.data
+					console.log(this.transactions)
 				})
 				.catch(error => {
 					console.log(error.message);
 				});
 
 			axios
-				.get(this.url + "/user/4")
+				.get(this.url + "user/4")
 				.then(response => {
 					this.userBalance = response["data"][0]["Wallet_Balance"];
 					console.log(userBalance);
@@ -404,17 +378,21 @@
 			this.connectWallet();
 			this.checkConnectedWalletExist();
 		},
-		methods:{
-			checkConnectedWalletExist: async function(){
+		methods: {
+			checkConnectedWalletExist: async function () {
 				try {
-					const { ethereum } = window;
+					const {
+						ethereum
+					} = window;
 					if (!ethereum) {
 						await connectWallet();
 						return true;
 					} else {
 						console.log("We have the ethereum object", ethereum);
 					}
-					const accounts = await ethereum.request({ method: "eth_accounts" });
+					const accounts = await ethereum.request({
+						method: "eth_accounts"
+					});
 					if (accounts.length !== 0) {
 						const account = accounts[0];
 						console.log("Found an authorized account:", account);
@@ -429,20 +407,21 @@
 					return false;
 				}
 			},
-			connectWallet: async function (){
+			connectWallet: async function () {
 				try {
-				const { ethereum } = window;
-				if (!ethereum) {
-					alert("Get MetaMask!");
-					return;
-				}
-				const accounts = await ethereum.request({
+					const {
+						ethereum
+					} = window;
+					if (!ethereum) {
+						alert("Get MetaMask!");
+						return;
+					}
+					const accounts = await ethereum.request({
 						method: "eth_requestAccounts",
-				});
-				console.log("Connected", accounts[0]);
-				this.currentAccount = accounts[0];
-				} 
-				catch (error) {
+					});
+					console.log("Connected", accounts[0]);
+					this.currentAccount = accounts[0];
+				} catch (error) {
 					console.log(error);
 				}
 			},
