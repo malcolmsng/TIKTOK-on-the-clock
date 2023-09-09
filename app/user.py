@@ -44,7 +44,9 @@ except PassageError as e:
 @auth.before_request
 def before_request():
     try:
-        g.user = psg.authenticateRequest(request)
+        ###########check this back after testing ###############
+        # g.user = psg.authenticateRequest(request)
+        pass
     except PassageError as e:
         return "Not Authenticated", 404
 

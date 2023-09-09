@@ -297,6 +297,9 @@
 					if (intAmount > this.userBalance) {
 						console.log("You are trying to transfer more than you have.");
 						return;
+					}else if(intAmount <= 0 || isNaN(intAmount)){
+						console.log("Invalid Transfer Amount");
+						return;
 					} else {
 						axios
 							.post(this.url + "/transaction", {
@@ -312,7 +315,7 @@
                                 }
                             })
 							.catch(error => {
-                                console.log(response)
+                                console.log(error)
                             });
 					}
 				},
