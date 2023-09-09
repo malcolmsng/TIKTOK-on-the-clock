@@ -39,7 +39,7 @@ except PassageError as e:
     exit()
 
 
-@auth.before_request
+@app.before_request
 def before_request():
     try:
         g.user = psg.authenticateRequest(request)
